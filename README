@@ -1,4 +1,5 @@
-= LawlJSON =
+LawlJSON 
+========
 
 LawlJSON is a light JSON implementation for C++ distributed under the FreeBSD license, e.g. use it to your hearts financial content. It is designed to be as simple as possible and to use pre-existing infrastructure such as the STL. For this reason it is an excellent choice for projects that need a quick file import and export. 
 
@@ -10,6 +11,7 @@ I make games and all I ever wanted was a simple JSON library.
 
 Enjoy :)
 
-= Usage =
+Usage
+=====
 
 WHO KNOWS?!
