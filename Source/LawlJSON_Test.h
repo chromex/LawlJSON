@@ -1,6 +1,10 @@
 #ifndef LAWLJSON_TEST_H
 #define LAWLJSON_TEST_H
 
+#include "LawlJSON_Settings.h"
+
+BEGIN_LAWLJSON
+
 class LawlJSON_Test
 {
 public:
@@ -30,5 +34,7 @@ private:
     char* _message;
     bool _outputToConsole;
 };
+
+END_LAWLJSON
 
 #endif

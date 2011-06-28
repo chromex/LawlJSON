@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdio.h>
 
+BEGIN_LAWLJSON
+
 // Management
 //
 
@@ -63,3 +65,5 @@ void LawlJSON_Test::SetErrorMessage(const char *message)
         printf("%s\n", _message);
     }
 }
+
+END_LAWLJSON
