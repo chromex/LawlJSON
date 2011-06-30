@@ -11,7 +11,39 @@ I make games and all I ever wanted was a simple JSON library.
 
 Enjoy :)
 
-Usage
-=====
+Export Example
+==============
 
-WHO KNOWS?!
+Building a structure for export is very simple. Since the two collection types
+in JSON are array and object I've just mapped array to std::vector and object
+to std::map. 
+
+Literally, they are just typedefs. 
+
+With the proper constructors and copy operators in place we can get away with
+building objects and array as you can see below. Awesome!
+
+	LJValue root = LJObject();
+	(*root.object)["name"] = "Chaos";
+	(*root.object)["function"] = "Be Awesome";
+	(*root.object)["howHigh?"] = 9001.0;
+	(*root.object)["tooTrue?"] = false;
+	(*root.object)["true"] = true;
+	(*root.object)["isNull"] = LJValue();
+	LJArray arr;
+	arr.push_back(99.234);
+	arr.push_back("Who");
+	arr.push_back(true);
+	arr.push_back(root);
+	arr.push_back(LJArray());
+	(*root.object)["Arr!"] = arr;
+
+Note that stuff like 'arr.push_back(root)' creates a copy of the object.
+
+Now to get the exported string simply
+
+  LJString result;
+	Serialize(root, result);
+
+Since LJString is just a std::string, you can use all your favorite stuff for
+saving it out! How cool is that!?
