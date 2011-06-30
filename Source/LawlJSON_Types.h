@@ -11,7 +11,7 @@ BEGIN_LAWLJSON
 
 // The different types a LJValue can be
 //
-enum LJType {LJ_STRING, LJ_NUMBER, LJ_OBJECT, LJ_ARRAY, LJ_BOOL, LJ_NULL, LJ_NO_VALUE};
+enum LJType {LJ_STRING, LJ_NUMBER, LJ_OBJECT, LJ_ARRAY, LJ_BOOL, LJ_NULL};
 
 class LJValue;
 
@@ -29,6 +29,11 @@ public:
     // Management
     //
     LJValue();
+    LJValue(const LJString& str);
+    LJValue(const LJNumber& num);
+    LJValue(const LJObject& obj);
+    LJValue(const LJArray& arr);
+    LJValue(const LJBool& b);
     LJValue(const LJValue& other);
     LJValue& operator=(const LJValue& other);
     ~LJValue();
@@ -71,6 +76,15 @@ private:
     //
     void Clean();
 };
+
+// Serialization functions
+//
+void Serialize(const LJString& string, LJString& result);
+void Serialize(const LJNumber& number, LJString& result);
+void Serialize(const LJObject& object, LJString& result);
+void Serialize(const LJArray& array, LJString& result);
+void Serialize(const LJBool& boolean, LJString& result);
+void Serialize(const LJValue& value, LJString& result);
 
 END_LAWLJSON
 

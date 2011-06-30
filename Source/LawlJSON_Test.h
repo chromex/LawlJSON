@@ -27,6 +27,7 @@ private:
     
     // Helpers
     //
+    bool TestSerialization();
     void SetErrorMessage(const char* message);
     
     // Members

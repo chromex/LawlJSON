@@ -7,10 +7,35 @@ BEGIN_LAWLJSON
 // Begin LJValue
 //
 
-LJValue::LJValue() : type(LJ_NO_VALUE)
+LJValue::LJValue() : type(LJ_NULL)
 {}
 
-LJValue::LJValue(const LJValue& other) : type(LJ_NO_VALUE)
+LJValue::LJValue(const LJString& str) : type(LJ_NULL)
+{
+    SetString(str);
+}
+
+LJValue::LJValue(const LJNumber& num) : type(LJ_NULL)
+{
+    SetNumber(num);
+}
+
+LJValue::LJValue(const LJObject& obj) : type(LJ_NULL)
+{
+    SetObject(obj);
+}
+
+LJValue::LJValue(const LJArray& arr) : type(LJ_NULL)
+{
+    SetArray(arr);
+}
+
+LJValue::LJValue(const LJBool& b) : type(LJ_NULL)
+{
+    SetBoolean(b);
+}
+
+LJValue::LJValue(const LJValue& other) : type(LJ_NULL)
 {
     *this = other;
 }
@@ -39,8 +64,6 @@ LJValue& LJValue::operator=(const LJValue& other)
             boolean = other.boolean;
             break;
         case LJ_NULL:
-            break;
-        case LJ_NO_VALUE:
             break;
         default:
             assert(false /* Should have one of LJType */);
@@ -146,14 +169,97 @@ void LJValue::Clean()
             break;
         case LJ_NULL:
             break;
-        case LJ_NO_VALUE:
-            break;
         default:
             assert(false /* Should have one of LJType */);
     }
 }
 
 // End LJValue
+//
+
+// Serialization functions
+//
+
+void Serialize(const LJString& string, LJString& result)
+{
+    result += "\"" + string + "\"";
+}
+
+void Serialize(const LJNumber& number, LJString& result)
+{
+    result += number;
+}
+
+void Serialize(const LJObject& object, LJString& result)
+{
+    result += "{";
+    
+    for(LJObject::const_iterator entry = object.begin(); entry != object.end(); ++entry)
+    {
+        if(entry != object.begin())
+            result += ",";
+        
+        Serialize((*entry).first, result);
+        
+        result += ":";
+        
+        Serialize((*entry).second, result);
+    }
+    
+    result += "}";
+}
+
+void Serialize(const LJArray& array, LJString& result)
+{
+    result += "[";
+    
+    for(LJArray::const_iterator entry = array.begin(); entry != array.end(); ++entry)
+    {
+        if(entry != array.begin())
+            result += ",";
+        
+        Serialize(*entry, result);
+    }
+    
+    result += "]";
+}
+
+void Serialize(const LJBool& boolean, LJString& result)
+{
+    if(true == boolean)
+        result += "true";
+    else
+        result += "false";
+}
+
+void Serialize(const LJValue& value, LJString& result)
+{
+    switch(value.type)
+    {
+        case LJ_STRING:
+            Serialize(*value.string, result);
+            break;
+        case LJ_NUMBER:
+            Serialize(value.number, result);
+            break;
+        case LJ_OBJECT:
+            Serialize(*value.object, result);
+            break;
+        case LJ_ARRAY:
+            Serialize(*value.array, result);
+            break;
+        case LJ_BOOL:
+            Serialize(value.boolean, result);
+            break;
+        case LJ_NULL:
+            result += "null";
+            break;
+        default:
+            assert(false /* Should be one of LJType */);
+    }
+}
+
+// End serialization functions
 //
 
 END_LAWLJSON

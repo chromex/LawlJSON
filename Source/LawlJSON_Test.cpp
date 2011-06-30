@@ -35,9 +35,10 @@ bool LawlJSON_Test::Verify(bool outputToConsole)
 {
     _outputToConsole = outputToConsole;
     
-    SetErrorMessage("No implemented tests");
+    if(!TestSerialization())
+        return false;
     
-    return false;
+    return true;
 }
 
 const char* LawlJSON_Test::ErrorMessage() const
@@ -47,6 +48,27 @@ const char* LawlJSON_Test::ErrorMessage() const
 
 // Helpers
 //
+
+bool LawlJSON_Test::TestSerialization()
+{
+    SetErrorMessage("Begin testing serialization");
+    
+    SetErrorMessage("Constructing JSON tree");
+    
+    LJValue root = LJObject();
+    (*root.object)["name"] = LJString("Chaos");
+    (*root.object)["function"] = LJString("Be Awesome");
+    (*root.object)["howHigh?"] = 9001.0;
+    (*root.object)["tooTrue?"] = false;
+    (*root.object)["true"] = true;
+    (*root.object)["isNull"] = LJValue();
+    
+    LJString result;
+    Serialize(root, result);
+    SetErrorMessage(result.c_str());
+    
+    return true;
+}
 
 void LawlJSON_Test::SetErrorMessage(const char *message)
 {
