@@ -1,0 +1,32 @@
+#ifndef LAWLJSON_TOKENS_H
+#define LAWLJSON_TOKENS_H
+
+#include "LawlJSON_Settings.h"
+#include "LawlJSON_Types.h"
+
+BEGIN_LAWLJSON
+
+enum LJTOKEN {
+	/* symbols */
+	TOKEN_LSQBRACKET,
+	TOKEN_RSQBRACKET,
+	TOKEN_LBRACKET,
+	TOKEN_RBRACKET,
+	TOKEN_COLON,
+	TOKEN_COMMA,
+
+	/* types */
+	TOKEN_NUMBER,
+	TOKEN_TRUE,
+	TOKEN_FALSE,
+	TOKEN_NULL,
+	TOKEN_STRING,
+
+	TOKEN_EOF
+};
+
+LJString Tok2str(LJTOKEN token);
+
+END_LAWLJSON
+
+#endif

@@ -52,49 +52,61 @@ public:
 	//
 	void SetString(const LJString& str);
 	void SetString(LJString* str);
+	void SetString();
 	
 	void SetNumber(LJNumber num);
 	
 	void SetObject(const LJObject& obj);
 	void SetObject(LJObject* obj);
+	void SetObject();
 	
 	void SetArray(const LJArray& arr);
 	void SetArray(LJArray* arr);
+	void SetArray();
 	
 	void SetBoolean(LJBool b);
 	
 	void SetNull();
 	
-	// Getters
-	//
-	bool IsNull() const;
-	
 	// Public properties
 	//
-	LJType type;
-	union 
-	{
-		LJString*  string;
-		LJNumber   number;
-		LJObject*  object;
-		LJArray*   array;
-		LJBool	 boolean;
-	};
+	LJString& string();
+	const LJString& string() const;
+	LJNumber& number();
+	const LJNumber& number() const;
+	LJObject& object();
+	const LJObject& object() const;
+	LJArray& array();
+	const LJArray& array() const;
+	LJBool& boolean();
+	const LJBool& boolean() const;
+
+	LJType type() const;
+
+	// Tests
+	//
+	bool IsString() const;
+	bool IsNumber() const;
+	bool IsObject() const;
+	bool IsArray() const;
+	bool IsBoolean() const;
+	bool IsNull() const;
 	
 private:
 	// Helpers
 	//
 	void Clean();
-};
 
-// Serialization functions
-//
-void Serialize(const LJString& string, LJString& result, int offset = 0);
-void Serialize(const LJNumber& number, LJString& result, int offset = 0);
-void Serialize(const LJObject& object, LJString& result, int offset = 0);
-void Serialize(const LJArray& array, LJString& result, int offset = 0);
-void Serialize(const LJBool& boolean, LJString& result, int offset = 0);
-void Serialize(const LJValue& value, LJString& result, int offset = 0);
+	LJType _type;
+	union 
+	{
+		LJString*  _string;
+		LJNumber   _number;
+		LJObject*  _object;
+		LJArray*   _array;
+		LJBool	   _boolean;
+	};
+};
 
 END_LAWLJSON
 

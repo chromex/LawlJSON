@@ -56,23 +56,23 @@ bool LawlJSON_Test::TestSerialization()
 	SetErrorMessage("Constructing JSON tree");
 	
 	LJValue root = LJObject();
-	(*root.object)["name"] = "Chaos";
-	(*root.object)["function"] = "Be Awesome";
-	(*root.object)["howHigh?"] = 9001.0;
-	(*root.object)["tooTrue?"] = false;
-	(*root.object)["true"] = true;
-	(*root.object)["isNull"] = LJValue();
+	root.object()["name"] = "Chaos \"is epic\"";
+	root.object()["function"] = "Be\t Awesome\\";
+	root.object()["howHigh?"] = 9001.0;
+	root.object()["tooTrue?"] = false;
+	root.object()["true"] = true;
+	root.object()["isNull"] = LJValue();
 	LJArray arr;
 	arr.push_back(99.234);
 	arr.push_back("Who");
 	arr.push_back(true);
 	arr.push_back(root);
 	arr.push_back(LJArray());
-	(*root.object)["Arr!"] = arr;
+	root.object()["Arr!"] = arr;
 	
 	SetErrorMessage("Serializing tree");
 	LJString result;
-	Serialize(root, result, true);
+	Serialize(root, result);
 	SetErrorMessage("Serialization results:");
 	SetErrorMessage(result.c_str());
 	if(LJString("{\"Arr!\":[99.234,\"Who\",true,{\"function\":\"Be Awesome\",\"howHigh?\":9001,\"isNull\":null,\"name\":\"Chaos\",\"tooTrue?\":false,\"true\":true},[]],\"function\":\"Be Awesome\",\"howHigh?\":9001,\"isNull\":null,\"name\":\"Chaos\",\"tooTrue?\":false,\"true\":true}").compare(result) == 0)
@@ -82,6 +82,20 @@ bool LawlJSON_Test::TestSerialization()
 	else
 	{
 		SetErrorMessage("Generated incorrect serialization");
+	}
+
+	LJValue parsedFile;
+	try
+	{
+		ParseJSON(parsedFile, result.c_str());
+		LJString r2;
+		Serialize(parsedFile, r2);
+		SetErrorMessage("Parsing results:");
+		SetErrorMessage(r2.c_str());
+	}
+	catch(std::exception& e)
+	{
+		SetErrorMessage(e.what());
 	}
 	
 	return true;
