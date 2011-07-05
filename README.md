@@ -1,4 +1,4 @@
-# Release Notes
+Release Notes
 =============
 
 This is v1.0-rc1. It has only been tested casually and not in a production
@@ -41,7 +41,8 @@ Literally, they are just typedefs.
 With the proper constructors and copy operators in place we can get away with
 building objects and array as you can see below. Awesome!
 
-```LJValue root = LJObject();
+```c++
+LJValue root = LJObject();
 root.object()["name"] = "Chaos";
 root.object()["function"] = "Be Awesome";
 root.object()["howHigh?"] = 9001.0;
@@ -61,13 +62,15 @@ Note that stuff like 'arr.push_back(root)' creates a copy of the object.
 
 Now to get the exported string simply
 
-```LJString result;
+```
+LJString result;
 Serialize(root, result);
 ```
 
 Which results in (except not all pretty):
 
-```{
+```
+{
   "Arr!":
 	  [
       99.234,
@@ -102,7 +105,8 @@ Now importing is a little bit harder.
 
 Actually, I lied.
 
-```try
+```
+try
 {
   LJValue results;
   ParseJSON(jsonText, results);
