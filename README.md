@@ -62,14 +62,14 @@ Note that stuff like 'arr.push_back(root)' creates a copy of the object.
 
 Now to get the exported string simply
 
-```
+```c++
 LJString result;
 Serialize(root, result);
 ```
 
 Which results in (except not all pretty):
 
-```
+```c++
 {
   "Arr!":
 	  [
@@ -105,7 +105,7 @@ Now importing is a little bit harder.
 
 Actually, I lied.
 
-```
+```c++
 try
 {
   LJValue results;
