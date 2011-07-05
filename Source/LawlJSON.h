@@ -6,7 +6,7 @@
 
 BEGIN_LAWLJSON
 
-void ParseJSON(LJValue& result, const char* json);
+	void ParseJSON(const char* json, LJValue& result);
 
 // Serialization functions
 //

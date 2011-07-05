@@ -75,19 +75,12 @@ bool LawlJSON_Test::TestSerialization()
 	Serialize(root, result);
 	SetErrorMessage("Serialization results:");
 	SetErrorMessage(result.c_str());
-	if(LJString("{\"Arr!\":[99.234,\"Who\",true,{\"function\":\"Be Awesome\",\"howHigh?\":9001,\"isNull\":null,\"name\":\"Chaos\",\"tooTrue?\":false,\"true\":true},[]],\"function\":\"Be Awesome\",\"howHigh?\":9001,\"isNull\":null,\"name\":\"Chaos\",\"tooTrue?\":false,\"true\":true}").compare(result) == 0)
-	{
-		SetErrorMessage("Generated correct serialization");
-	}
-	else
-	{
-		SetErrorMessage("Generated incorrect serialization");
-	}
 
 	LJValue parsedFile;
 	try
 	{
-		ParseJSON(parsedFile, result.c_str());
+		SetErrorMessage("Parsing generated JSON");
+		ParseJSON(result.c_str(), parsedFile);
 		LJString r2;
 		Serialize(parsedFile, r2);
 		SetErrorMessage("Parsing results:");
