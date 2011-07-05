@@ -42,20 +42,20 @@ With the proper constructors and copy operators in place we can get away with
 building objects and array as you can see below. Awesome!
 
 ```c++
-LJValue root = LJObject();
-root.object()["name"] = "Chaos";
-root.object()["function"] = "Be Awesome";
-root.object()["howHigh?"] = 9001.0;
-root.object()["tooTrue?"] = false;
-root.object()["true"] = true;
-root.object()["isNull"] = LJValue();
+LJObject root;
+root["name"] = "Chaos";
+root["function"] = "Be Awesome";
+root["howHigh?"] = 9001.0;
+root["tooTrue?"] = false;
+root["true"] = true;
+root["isNull"] = LJValue();
 LJArray arr;
 arr.push_back(99.234);
 arr.push_back("Who");
 arr.push_back(true);
 arr.push_back(root);
 arr.push_back(LJArray());
-root.object()["Arr!"] = arr;
+root["Arr!"] = arr;
 ```
 
 Note that stuff like 'arr.push_back(root)' creates a copy of the object.
