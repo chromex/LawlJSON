@@ -27,7 +27,6 @@ private:
 	/* Helpers */
 	bool ParseIdent();
 	bool ParseNum();
-	int  ComputeMaxLen(const char *valid);
 	bool IsComment();
 
 	const char*  _src;

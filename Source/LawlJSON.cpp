@@ -2,7 +2,6 @@
 #include "LawlJSON_Lexer.h"
 
 #include <assert.h>
-#include <exception>
 #include <sstream>
 
 BEGIN_LAWLJSON
@@ -31,14 +30,14 @@ void ParseJSON_Object( LJValue& object, LJLexer& lexer )
 	{
 		if(TOKEN_STRING != lexer.Token())
 		{
-			throw std::exception("expected string key for object");
+			throw LJException("expected string key for object");
 		}
 		LJString key = lexer.Data();
 		lexer.Next();
 
 		if(TOKEN_COLON != lexer.Token())
 		{
-			throw std::exception("expected colon separator for object");
+			throw LJException("expected colon separator for object");
 		}
 		lexer.Next();
 
@@ -86,7 +85,7 @@ void ParseJSON_Helper( LJValue& result, LJLexer& lexer )
 		lexer.Next();
 		break;
 	default:
-		throw std::exception("bad token encountered");
+		throw LJException("bad token encountered");
 		break;
 	}
 }

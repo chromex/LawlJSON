@@ -3,10 +3,11 @@
 
 #include "LawlJSON_Settings.h"
 #include "LawlJSON_Types.h"
+#include "LawlJSON_Exception.h"
 
 BEGIN_LAWLJSON
 
-	void ParseJSON(const char* json, LJValue& result);
+void ParseJSON(const char* json, LJValue& result);
 
 // Serialization functions
 //

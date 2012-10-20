@@ -1,4 +1,5 @@
 #include "LawlJSON_Lexer.h"
+#include "LawlJSON_Exception.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -59,7 +60,7 @@ void LJLexer::Next()
 				std::stringstream ss;
 				ss << "lexical analyzer failed at: " << _src;
 				++_src;
-				throw std::exception(ss.str().c_str());
+				throw LJException(ss.str().c_str());
 			}
 			else
 			{
@@ -93,7 +94,7 @@ bool LJLexer::ParseNum()
 		++_src;
 	}
 
-	int len = ComputeMaxLen(valid);
+	int len = strspn(_src, valid);
 	if(len == 0)
 	{
 		_src = reset;
@@ -106,23 +107,11 @@ bool LJLexer::ParseNum()
 	return true;
 }
 
-int LJLexer::ComputeMaxLen(const char *valid)
-{
-	const char *end = _src;
-	while(strpbrk(end, valid) == end)
-	{
-		++end;
-	}
-	return end - _src;
-}
-
 LJString UnEscape(const LJString& str)
 {
 	LJString result;
 
-	size_t len = str.size();
-
-	for(const char* cstr = str.c_str(); *cstr != NULL; ++cstr)
+	for(const char* cstr = str.c_str(); *cstr != 0; ++cstr)
 	{
 		if('\\' == *cstr)
 		{
@@ -156,7 +145,7 @@ LJString UnEscape(const LJString& str)
 			default:
 				std::stringstream ss;
 				ss << "lexical analyzer failed while un-escaping string: " << str;
-				throw std::exception(ss.str().c_str());
+				throw LJException(ss.str().c_str());
 			}
 		}
 		else
@@ -173,13 +162,14 @@ bool LJLexer::ParseIdent()
 	const char* reset = _src;
 
 	// Check begin quote
-	if('"' != *_src)
+	char firstChar = *_src;
+	if('"' != firstChar)
 	{
-		const char* chars = "truefalsnu";
-		int len = ComputeMaxLen(chars);
-
-		if(0 != len)
+		if(firstChar == 't' || firstChar == 'f' || firstChar == 'n')
 		{
+			const char* chars = "truefalsnu";
+			int len = strspn(_src, chars);
+
 			// Check reserved words
 			RESERVED("true", TOKEN_TRUE);
 			RESERVED("false", TOKEN_FALSE);

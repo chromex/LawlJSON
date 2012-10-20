@@ -91,6 +91,9 @@ public:
 	bool IsArray() const;
 	bool IsBoolean() const;
 	bool IsNull() const;
+
+	bool IsNumberArray() const;
+	bool IsStringArray() const;
 	
 private:
 	// Helpers

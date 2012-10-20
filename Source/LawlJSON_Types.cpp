@@ -1,4 +1,5 @@
 #include "LawlJSON_Types.h"
+#include "LawlJSON_Exception.h"
 
 #include <assert.h>
 
@@ -207,7 +208,9 @@ void LJValue::SetNull()
 
 LJString& LJValue::string()
 {
-	assert(LJ_STRING == _type);
+	if(LJ_STRING != _type) {
+		throw LJException("Type is not a string");
+	}
 	assert(_string);
 	return *_string;
 }
@@ -217,9 +220,11 @@ const LJString& LJValue::string() const
 	return const_cast<LJValue*>(this)->string();
 }
 
-LawlJSON::LJNumber& LJValue::number()
+LJNumber& LJValue::number()
 {
-	assert(LJ_NUMBER == _type);
+	if(LJ_NUMBER != _type) {
+		throw LJException("Type is not a number");
+	}
 	return _number;
 }
 
@@ -230,7 +235,9 @@ const LJNumber& LJValue::number() const
 
 LJObject& LJValue::object()
 {
-	assert(LJ_OBJECT == _type);
+	if(LJ_OBJECT != _type) {
+		throw LJException("Type is not an object");
+	}
 	assert(_object);
 	return *_object;
 }
@@ -242,7 +249,9 @@ const LJObject& LJValue::object() const
 
 LJArray& LJValue::array()
 {
-	assert(LJ_ARRAY == _type);
+	if(LJ_ARRAY != _type) {
+		throw LJException("Type is not an array");
+	}
 	assert(_array);
 	return *_array;
 }
@@ -252,9 +261,11 @@ const LJArray& LJValue::array() const
 	return const_cast<LJValue*>(this)->array();
 }
 
-LawlJSON::LJBool& LJValue::boolean()
+LJBool& LJValue::boolean()
 {
-	assert(LJ_BOOL == _type);
+	if(LJ_BOOL != _type) {
+		throw LJException("Type is not a boolean");
+	}
 	return _boolean;
 }
 
@@ -263,7 +274,7 @@ const LJBool& LJValue::boolean() const
 	return const_cast<LJValue*>(this)->boolean();
 }
 
-LawlJSON::LJType LJValue::type() const
+LJType LJValue::type() const
 {
 	return _type;
 }
@@ -296,6 +307,36 @@ bool LJValue::IsBoolean() const
 bool LJValue::IsNull() const
 {
 	return LJ_NULL == _type;
+}
+
+bool LJValue::IsNumberArray() const
+{
+	if(!IsArray())
+		return false;
+
+	const LJArray& arr = array();
+	for(LJArray::const_iterator entry = arr.begin(); entry != arr.end(); ++entry) 
+	{
+		if(!entry->IsNumber())
+			return false;
+	}
+
+	return true;
+}
+
+bool LJValue::IsStringArray() const
+{
+	if(!IsArray())
+		return false;
+
+	const LJArray& arr = array();
+	for(LJArray::const_iterator entry = arr.begin(); entry != arr.end(); ++entry) 
+	{
+		if(!entry->IsString())
+			return false;
+	}
+
+	return true;
 }
 
 void LJValue::Clean()
