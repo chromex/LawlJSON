@@ -1,6 +1,23 @@
 Release Notes
 =============
 
+## v1.0-rc2
+
+Since the previous commit this library has been used extensively in multiple projects. This commit includes:
+
+* A cmake script was added to the root of the project to help with testing
+* Speed improvements for parsing numbers
+* A std::exception derivative so that the what() member can be used in linux
+* LJObject to specific type conversions no longer use asserts when an illegal type is required and instead throws an exception
+
+There is currently only one known bug where parsing arrays does not require commas between elements. Certainly doesn't break anything but it can let poorly formatted JSON go unnoticed.
+
+Ultimately, before 1.0 can be finalized a much more thorough testing setup needs to be implemented but as it works well enough right now we shall see when the motivation arises.
+
+- Loren
+
+## v1.0-rc1
+
 This is v1.0-rc1. It has only been tested casually and not in a production
 system. As it is integrated into projects and bugs/improvements arrise the
 project will be updated. 
