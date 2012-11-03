@@ -27,7 +27,9 @@ int main(int argc, char **argv)
 	cout << "=================" << endl;
 	cout << "End LawlJSON Test" << endl;
 
+#ifdef _WIN32
 	system("pause");
+#endif
 	
 	return 0;
 }

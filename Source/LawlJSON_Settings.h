@@ -3,11 +3,13 @@
 
 #define LJ_NUMBER_TYPE double
 
+#define LJ_NAMESPACE LawlJSON
+
 // Set to one if you want LawlJSON to be inside the LawlJSON namespace
 // and 0 if not.
 //
 #if 1
-    #define BEGIN_LAWLJSON namespace LawlJSON {
+    #define BEGIN_LAWLJSON namespace LJ_NAMESPACE {
     #define END_LAWLJSON }
 #else
     #define BEGIN_LAWLJSON

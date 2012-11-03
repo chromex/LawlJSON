@@ -56,32 +56,39 @@ void ParseJSON_Helper( LJValue& result, LJLexer& lexer )
 	{
 	case TOKEN_LSQBRACKET:
 		result.SetArray();
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		ParseJSON_Array(result, lexer);
 		break;
 	case TOKEN_LBRACKET:
 		result.SetObject();
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		ParseJSON_Object(result, lexer);
 		break;
 	case TOKEN_STRING:
 		result = lexer.Data();
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		break;
 	case TOKEN_NUMBER:
 		result = lexer.Number();
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		break;
 	case TOKEN_TRUE:
 		result = true;
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		break;
 	case TOKEN_FALSE:
 		result = false;
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		break;
 	case TOKEN_NULL:
 		result.SetNull();
+		result.SetLineNumber(lexer.Line());
 		lexer.Next();
 		break;
 	default:

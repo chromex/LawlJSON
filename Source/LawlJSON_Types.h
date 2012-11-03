@@ -82,6 +82,8 @@ public:
 	const LJBool& boolean() const;
 
 	LJType type() const;
+	int LineNumber() const;
+	void SetLineNumber(int lineNumber);
 
 	// Tests
 	//
@@ -109,6 +111,7 @@ private:
 		LJArray*   _array;
 		LJBool	   _boolean;
 	};
+	int _lineNumber;
 };
 
 END_LAWLJSON

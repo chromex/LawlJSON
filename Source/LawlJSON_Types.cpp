@@ -8,7 +8,7 @@ BEGIN_LAWLJSON
 // Begin LJValue
 //
 
-LJValue::LJValue() : _type(LJ_NULL)
+LJValue::LJValue() : _type(LJ_NULL), _lineNumber(-1)
 {}
 
 LJValue::LJValue(const LJString& str) : _type(LJ_NULL)
@@ -277,6 +277,16 @@ const LJBool& LJValue::boolean() const
 LJType LJValue::type() const
 {
 	return _type;
+}
+
+int LJValue::LineNumber() const
+{
+	return _lineNumber;
+}
+
+void LJValue::SetLineNumber(int lineNumber)
+{
+	_lineNumber = lineNumber;
 }
 
 bool LJValue::IsString() const
