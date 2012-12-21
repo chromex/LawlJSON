@@ -84,7 +84,7 @@ int LJLexer::Line() const
 
 bool LJLexer::ParseNum()
 {
-	const char* valid = "0123456789.Ee";
+	const char* valid = "0123456789.Ee+";
 	const char* reset = _src;
 
 	double mult = 1;
